@@ -1,22 +1,26 @@
 #!/usr/bin/env groovy
 pipeline {
   agent any
-  environment {
-    mvnHome = tool 'M3'
-  }
   stages {
     stage('Preparation') {
-      git([url: 'git@github.com:jairoandre/demo.git', branch: 'master', credentialsId: 'b9bdf1cf-40bf-4203-8a45-949761c3c4f7'])
-      mvnHome = tool 'M3'
+      steps {
+        git([url: 'git@github.com:jairoandre/demo.git', branch: 'master', credentialsId: 'b9bdf1cf-40bf-4203-8a45-949761c3c4f7'])
+      }
     }
     stage('Building jars') {
-      sh "'${mvnHome}/bin/mvn' clean package -Dmaven.test.skip=true"
+      steps {
+        sh "mvn clean package -Dmaven.test.skip=true"
+      }
     }
     stage('Running containers') {
-      sh 'docker-compose up -d'
+      steps {
+        sh 'docker-compose up -d'
+      }
     }
     stage('Runnning Integration Tests') {
-      sh "'${mvnHome}/bin/mvn' clean test"
+      steps {
+        sh "mvn clean test"
+      }
     }
   }
 }
