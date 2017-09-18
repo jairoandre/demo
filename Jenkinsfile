@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Preparation') {
       steps {
-        git([url: 'git@github.com:jairoandre/demo.git', branch: 'master', credentialsId: 'b9bdf1cf-40bf-4203-8a45-949761c3c4f7'])
+        git([url: 'git@github.com:jairoandre/demo.git', branch: 'master', credentialsId: '6b440d8a-2871-426f-bf18-c2588f5fdf51'])
       }
     }
     stage('Building jars') {
